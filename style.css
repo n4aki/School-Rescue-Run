@@ -6,6 +6,11 @@
   --border: #1f2d3d;
   --text: #15202b;
   --accent: #ef7d57;
+  --boss: #b42318;
+  --boss-bg: #ffe1df;
+  --touch-bg: rgba(31, 45, 61, 0.88);
+  --touch-text: #ffffff;
+  --touch-accent: #ffd166;
   --shadow: rgba(16, 32, 48, 0.18);
 }
 
@@ -20,6 +25,9 @@ body {
   place-items: center;
   font-family: "Trebuchet MS", "Verdana", sans-serif;
   color: var(--text);
+  overflow-x: hidden;
+  overscroll-behavior: none;
+  touch-action: manipulation;
   background:
     radial-gradient(circle at top left, rgba(255, 255, 255, 0.9), transparent 32%),
     linear-gradient(180deg, var(--bg-top), var(--bg-bottom));
@@ -28,6 +36,17 @@ body {
 .game-shell {
   width: min(100%, 1040px);
   padding: 20px;
+}
+
+.orientation-hint {
+  margin-bottom: 12px;
+  padding: 10px 14px;
+  border: 3px solid var(--border);
+  border-radius: 14px;
+  background: rgba(255, 209, 102, 0.92);
+  font-weight: 700;
+  text-align: center;
+  box-shadow: 0 12px 30px var(--shadow);
 }
 
 .hud,
@@ -52,14 +71,24 @@ body {
   font-weight: 700;
 }
 
+.boss {
+  color: var(--boss);
+  background: var(--boss-bg);
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+
 .status {
   color: var(--accent);
+  flex: 1 1 100%;
+  text-align: center;
 }
 
 canvas {
   display: block;
   width: 100%;
   height: auto;
+  max-height: min(68vh, 540px);
   border: 4px solid var(--border);
   border-radius: 18px;
   background: linear-gradient(180deg, #7fd3ff 0%, #d8f3ff 58%, #f8fdff 100%);
@@ -73,15 +102,186 @@ canvas {
 
 .controls p {
   margin: 0;
+  font-weight: 700;
+}
+
+.touch-controls {
+  margin-top: 12px;
+  display: flex;
+  gap: 14px;
+  align-items: stretch;
+  justify-content: space-between;
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+
+.touch-group {
+  display: flex;
+  gap: 12px;
+}
+
+.touch-group-action {
+  justify-content: flex-end;
+}
+
+.touch-button {
+  min-width: 72px;
+  min-height: 64px;
+  padding: 14px 18px;
+  border: 0;
+  border-radius: 18px;
+  background: var(--touch-bg);
+  color: var(--touch-text);
+  font: inherit;
+  font-weight: 800;
+  box-shadow: 0 12px 24px var(--shadow);
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
+
+.touch-button:active,
+.touch-button.is-active {
+  transform: translateY(1px) scale(0.98);
+  background: #15202b;
+  color: var(--touch-accent);
+}
+
+.touch-button-jump {
+  background: rgba(18, 105, 146, 0.92);
+}
+
+.touch-button-attack {
+  background: rgba(180, 35, 24, 0.92);
+}
+
+.touch-button-switch {
+  background: rgba(109, 62, 184, 0.92);
 }
 
 @media (max-width: 720px) {
   .game-shell {
-    padding: 12px;
+    width: 100%;
+    padding: 10px;
   }
 
   .hud,
   .controls {
     justify-content: center;
+  }
+
+  .hud,
+  .controls,
+  .orientation-hint {
+    border-width: 2px;
+    border-radius: 14px;
+  }
+
+  .hud {
+    gap: 8px;
+    padding: 10px 12px;
+  }
+
+  .hud-item {
+    font-size: 0.92rem;
+  }
+
+  .status {
+    font-size: 0.9rem;
+  }
+
+  canvas {
+    max-height: 50vh;
+    border-width: 3px;
+    border-radius: 16px;
+  }
+
+  .controls {
+    gap: 8px;
+    padding: 10px 12px;
+    font-size: 0.88rem;
+  }
+
+  .touch-controls {
+    gap: 10px;
+    flex-direction: column;
+  }
+
+  .touch-group {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .touch-group-action {
+    gap: 10px;
+  }
+
+  .touch-button {
+    flex: 1 1 0;
+    min-width: 0;
+    min-height: 58px;
+    padding: 12px 10px;
+    border-radius: 16px;
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    display: block;
+  }
+
+  .game-shell {
+    padding: 8px;
+  }
+
+  .hud-item {
+    font-size: 0.84rem;
+  }
+
+  .status {
+    font-size: 0.82rem;
+  }
+
+  canvas {
+    max-height: 44vh;
+  }
+
+  .controls {
+    font-size: 0.8rem;
+  }
+
+  .touch-button {
+    min-height: 56px;
+    font-size: 0.9rem;
+  }
+}
+
+@media (orientation: landscape) and (max-height: 520px) {
+  .game-shell {
+    padding: 8px;
+  }
+
+  .hud,
+  .controls,
+  .orientation-hint {
+    padding: 8px 10px;
+  }
+
+  .hud-item,
+  .controls p {
+    font-size: 0.82rem;
+  }
+
+  canvas {
+    max-height: 52vh;
+  }
+
+  .touch-controls {
+    margin-top: 8px;
+  }
+
+  .touch-button {
+    min-height: 52px;
   }
 }

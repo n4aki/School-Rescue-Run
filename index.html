@@ -9,15 +9,35 @@
 <body>
   <main class="game-shell">
     <header class="hud">
+      <div class="hud-item">Stage: <span id="stage-name">教室</span></div>
+      <div class="hud-item">Hero: <span id="hero-name">新入生</span></div>
+      <div class="hud-item">Rescued: <span id="rescued-count">0 / 4</span></div>
       <div class="hud-item">Coins: <span id="coin-count">0</span></div>
       <div class="hud-item">Lives: <span id="life-count">3</span></div>
-      <div class="hud-item status" id="status-text">Reach the goal.</div>
+      <div class="hud-item boss" id="boss-panel" hidden>Boss HP: <span id="boss-hp">0</span></div>
+      <div class="hud-item status" id="status-text">教室で最初の仲間を探そう。</div>
     </header>
+    <section class="orientation-hint" id="orientation-hint" hidden>
+      横向きプレイ推奨: 画面を横にすると操作しやすくなります。
+    </section>
     <canvas id="game" width="960" height="540" aria-label="2D side scrolling game"></canvas>
     <section class="controls">
       <p>Move: Arrow Keys / A,D</p>
       <p>Jump: Space / W / ArrowUp</p>
+      <p>Switch Hero: C</p>
+      <p>Attack: F</p>
       <p>Restart: R</p>
+    </section>
+    <section class="touch-controls" id="touch-controls" aria-label="Touch controls">
+      <div class="touch-group touch-group-move">
+        <button type="button" class="touch-button" id="touch-left" aria-label="Move left">←</button>
+        <button type="button" class="touch-button" id="touch-right" aria-label="Move right">→</button>
+      </div>
+      <div class="touch-group touch-group-action">
+        <button type="button" class="touch-button touch-button-jump" id="touch-jump" aria-label="Jump">Jump</button>
+        <button type="button" class="touch-button touch-button-attack" id="touch-attack" aria-label="Attack">Attack</button>
+        <button type="button" class="touch-button touch-button-switch" id="touch-switch" aria-label="Switch hero">Switch</button>
+      </div>
     </section>
   </main>
   <script src="game.js"></script>
