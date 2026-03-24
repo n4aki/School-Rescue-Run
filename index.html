@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Marimon Runner Prototype</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="game-shell">
+    <header class="hud">
+      <div class="hud-item">Coins: <span id="coin-count">0</span></div>
+      <div class="hud-item">Lives: <span id="life-count">3</span></div>
+      <div class="hud-item status" id="status-text">Reach the goal.</div>
+    </header>
+    <canvas id="game" width="960" height="540" aria-label="2D side scrolling game"></canvas>
+    <section class="controls">
+      <p>Move: Arrow Keys / A,D</p>
+      <p>Jump: Space / W / ArrowUp</p>
+      <p>Restart: R</p>
+    </section>
+  </main>
+  <script src="game.js"></script>
+</body>
+</html>
