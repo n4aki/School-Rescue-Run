@@ -16,6 +16,10 @@ const touchJumpEl = document.getElementById("touch-jump");
 const touchAttackEl = document.getElementById("touch-attack");
 const touchSwitchEl = document.getElementById("touch-switch");
 
+const DESKTOP_CANVAS_WIDTH = 960;
+const MOBILE_LANDSCAPE_CANVAS_WIDTH = 760;
+const MOBILE_PORTRAIT_CANVAS_WIDTH = 600;
+const CANVAS_HEIGHT = 540;
 const WORLD_HEIGHT = 540;
 const GRAVITY = 0.65;
 const MAX_FALL_SPEED = 14;
@@ -672,6 +676,26 @@ function updateOrientationHint() {
   orientationHintEl.hidden = !portrait;
 }
 
+function updateCanvasViewport() {
+  const compactMobile = window.innerWidth <= 600;
+  const portrait = window.innerHeight > window.innerWidth;
+
+  if (compactMobile && portrait) {
+    canvas.width = MOBILE_PORTRAIT_CANVAS_WIDTH;
+    canvas.height = CANVAS_HEIGHT;
+    return;
+  }
+
+  if (window.innerWidth <= 900) {
+    canvas.width = MOBILE_LANDSCAPE_CANVAS_WIDTH;
+    canvas.height = CANVAS_HEIGHT;
+    return;
+  }
+
+  canvas.width = DESKTOP_CANVAS_WIDTH;
+  canvas.height = CANVAS_HEIGHT;
+}
+
 function updatePlayer() {
   const currentCharacter = getCurrentCharacter();
   const moveLeft = keys.has("ArrowLeft") || keys.has("KeyA");
@@ -1214,8 +1238,11 @@ bindActionButton(touchAttackEl, tryAttack);
 bindActionButton(touchSwitchEl, switchCharacter);
 
 updateOrientationHint();
+updateCanvasViewport();
 window.addEventListener("resize", updateOrientationHint);
 window.addEventListener("orientationchange", updateOrientationHint);
+window.addEventListener("resize", updateCanvasViewport);
+window.addEventListener("orientationchange", updateCanvasViewport);
 
 resetGame();
 tick();
