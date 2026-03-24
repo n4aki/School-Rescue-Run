@@ -191,7 +191,7 @@ canvas {
   }
 
   canvas {
-    max-height: 50vh;
+    max-height: 56vh;
     border-width: 3px;
     border-radius: 16px;
   }
@@ -226,13 +226,14 @@ canvas {
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 600px) {
   body {
     display: block;
   }
 
   .game-shell {
-    padding: 8px;
+    min-height: 100svh;
+    padding: 8px 8px calc(10px + env(safe-area-inset-bottom, 0));
   }
 
   .hud-item {
@@ -244,7 +245,7 @@ canvas {
   }
 
   canvas {
-    max-height: 44vh;
+    max-height: min(52svh, 380px);
   }
 
   .controls {
@@ -255,33 +256,70 @@ canvas {
     min-height: 56px;
     font-size: 0.9rem;
   }
+
+  .touch-controls {
+    padding-bottom: calc(8px + env(safe-area-inset-bottom, 0));
+  }
 }
 
 @media (orientation: landscape) and (max-height: 520px) {
   .game-shell {
-    padding: 8px;
+    width: 100%;
+    min-height: 100svh;
+    padding: 6px 8px calc(8px + env(safe-area-inset-bottom, 0));
   }
 
   .hud,
   .controls,
   .orientation-hint {
-    padding: 8px 10px;
+    padding: 6px 8px;
+    border-width: 2px;
   }
 
   .hud-item,
   .controls p {
-    font-size: 0.82rem;
+    font-size: 0.76rem;
   }
 
   canvas {
-    max-height: 52vh;
+    max-height: calc(100svh - 150px);
+    border-width: 3px;
   }
 
   .touch-controls {
-    margin-top: 8px;
+    margin-top: 6px;
+    gap: 8px;
+    flex-direction: row;
+  }
+
+  .touch-group {
+    width: auto;
+    flex: 1 1 0;
+    justify-content: stretch;
+  }
+
+  .touch-group-action {
+    gap: 8px;
+  }
+
+  .controls {
+    display: none;
   }
 
   .touch-button {
-    min-height: 52px;
+    flex: 1 1 0;
+    min-width: 0;
+    min-height: 46px;
+    padding: 8px 10px;
+    font-size: 0.82rem;
+    border-radius: 14px;
+  }
+
+  .status {
+    font-size: 0.74rem;
+  }
+
+  .orientation-hint {
+    display: none;
   }
 }
